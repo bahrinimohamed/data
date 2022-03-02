@@ -51,7 +51,7 @@ public class AccountController {
     		users = null;
         model.addAttribute("users", users);
         model.addAttribute("nbr", nbr);
-        return "userss/listUsers";
+        return "user/listUsers";
     }
 	
 	@GetMapping("enable/{id}/{email}")
