@@ -1,7 +1,7 @@
 package com.sip.ams.controllers;
 
 import javax.validation.Valid;
-import com.sip.ams.entities.Usersss;
+import com.sip.ams.entities.User;
 import com.sip.ams.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -33,15 +33,15 @@ public class LoginController {
     @RequestMapping(value="/registration", method = RequestMethod.GET)
     public ModelAndView registration(){
         ModelAndView modelAndView = new ModelAndView();
-        Usersss user = new Usersss();
+        User user = new User();
         modelAndView.addObject("user", user);
         modelAndView.setViewName("registration");
         return modelAndView;
     }
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public ModelAndView createNewUser(@Valid Usersss user, BindingResult bindingResult) {
+    public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
-        Usersss userExists = userService.findUserByEmail(user.getEmail());
+        User userExists = userService.findUserByEmail(user.getEmail());
         if (userExists != null) {
             bindingResult
                     .rejectValue("email", "error.user",
@@ -52,7 +52,7 @@ public class LoginController {
         } else {
             userService.saveUser(user);
             modelAndView.addObject("successMessage", "User has been registered successfully");
-            modelAndView.addObject("user", new Usersss());
+            modelAndView.addObject("user", new User());
             modelAndView.setViewName("registration");
         }
         return modelAndView;

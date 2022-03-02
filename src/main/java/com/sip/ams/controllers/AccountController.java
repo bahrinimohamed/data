@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sip.ams.entities.Provider;
 import com.sip.ams.entities.Role;
-import com.sip.ams.entities.Usersss;
+import com.sip.ams.entities.User;
 import com.sip.ams.repositories.UserRepository;
 import com.sip.ams.repositories.RoleRepository;
 
@@ -45,7 +45,7 @@ public class AccountController {
 	@GetMapping("list")
     public String listUsers(Model model) {
     	
-    	List<Usersss> users = (List<Usersss>) userRepository.findAll();
+    	List<User> users = (List<User>) userRepository.findAll();
     	long nbr =  userRepository.count();
     	if(users.size()==0)
     		users = null;
@@ -60,7 +60,7 @@ public class AccountController {
     		@PathVariable ("email") String email) {
     	
 		 sendEmail(email, true);
-		 Usersss user = userRepository.findById(id).orElseThrow(()->new IllegalArgumentException("Invalid User Id:" + id));
+		 User user = userRepository.findById(id).orElseThrow(()->new IllegalArgumentException("Invalid User Id:" + id));
 	     user.setActive(1);
 	     userRepository.save(user);
     	return "redirect:../../list";
@@ -73,7 +73,7 @@ public class AccountController {
     	
 		 sendEmail(email, false);
 		 
-		 Usersss user = userRepository.findById(id).orElseThrow(()->new IllegalArgumentException("Invalid User Id:" + id));
+		 User user = userRepository.findById(id).orElseThrow(()->new IllegalArgumentException("Invalid User Id:" + id));
 	     user.setActive(0);
 	     userRepository.save(user);
     	return "redirect:../../list";
@@ -86,7 +86,7 @@ public class AccountController {
 			@RequestParam ("newrole")String newRole
 			) {
     	
-		 Usersss user = userRepository.findById(id).orElseThrow(()->new IllegalArgumentException("Invalid User Id:" + id));
+		 User user = userRepository.findById(id).orElseThrow(()->new IllegalArgumentException("Invalid User Id:" + id));
 	     
 		 Role userRole = roleRepository.findByRole(newRole);
 		 
